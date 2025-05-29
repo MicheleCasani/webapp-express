@@ -11,7 +11,6 @@ const movieController = require("../controllers/controller_film")
 
 // index
 router.get('/', movieController.index);
-
 //show 
 router.get('/:id', movieController.show);
 
