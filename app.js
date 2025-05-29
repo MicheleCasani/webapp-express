@@ -12,6 +12,11 @@ app.use(express.json());
 const notFound = require("./middlewares/notFound")
 const handleErrors = require("./middlewares/handleErrors")
 
+// middleware pe settare le immagini
+const imagePathMiddleware = require("./middlewares/imagePath")
+
+app.use(imagePathMiddleware);
+
 // importo il router
 const movieRouter = require("./router/router_film")
 

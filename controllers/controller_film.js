@@ -12,7 +12,17 @@ const index = (req, res) => {
     // eseguo la query per mostrare i post
     connection.query(sql, (err, results) => {
         if (err) return res.status(500).json({ error: 'Database error' });
-        res.json(results);
+
+        const movies = results.map((movie) => {
+            const obj = {
+                ...movie,
+                image: req.imagePath + movie.image
+            }
+
+            return obj
+        })
+
+        res.json(movies);
     })
 };
 
