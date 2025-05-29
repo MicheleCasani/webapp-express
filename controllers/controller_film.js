@@ -18,22 +18,36 @@ const index = (req, res) => {
 
 const show = (req, res) => {
     // recupero id
-    const id = (req.params.id);
+    const id = parseInt(req.params.id);
 
     // salvo in una variabile la query da utilizzare
-    const moviesql = 'SELECT * FROM movies WHERE id = ?';
+    const movieSql = 'SELECT * FROM movies WHERE id = ?';
 
-    // eseguo la query per mostrare il singolo post
-    connection.query(moviesql, [id], (err, movieResults) => {
+    const reviewSql = `
+    SELECT *
+    FROM reviews
+    WHERE movie_id = ?
+    `;
+
+    // eseguo la query per mostrare la singola review
+    connection.query(movieSql, [id], (err, movieResults) => {
         if (err) return res.status(500).json({ error: 'Database error' });
         if (movieResults.length === 0) return res.status(404).json({ error: 'Post non trovato' });
 
-        // recupero il post
+        // recupero il film
         const movie = movieResults[0];
 
-        res.json(movie);
-    })
-}
+        // eseguo la query per mostrare le review
+        connection.query(reviewSql, [id], (err, reviewResults) => {
+
+            // Aggiungo le recensioni al film
+            movie.reviews = reviewResults;
+
+
+            res.json(movie);
+        });
+    });
+};
 
 
 
@@ -42,3 +56,4 @@ module.exports = {
     index,
     show
 }
+
