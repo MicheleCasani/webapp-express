@@ -8,6 +8,10 @@ const port = 3000;
 // middleware per il parsing delle richiesta in formato json
 app.use(express.json());
 
+// middlewares di errore
+const notFound = require("./middlewares/notFound")
+const handleErrors = require("./middlewares/handleErrors")
+
 // importo il router
 const movieRouter = require("./router/router_film")
 
@@ -19,6 +23,11 @@ app.get("/", (req, res) => {
 
 // utilizzo le rotte definite nel router
 app.use("/movies", movieRouter)
+
+// error 500
+app.use(handleErrors);
+// 404 not found
+app.use(notFound);
 
 // dico al server di rimanere in ascolto sulla porta 3000
 app.listen(port, () => {
