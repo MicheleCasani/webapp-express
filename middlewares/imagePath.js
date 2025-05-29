@@ -1,5 +1,5 @@
-const setImagePath = (re, res, next) => {
-    re.setImagePath = `${req.protocol}://${req.get('host')}/img`
+const setImagePath = (req, res, next) => {
+    req.imagePath = `${req.protocol}://${req.get('host')}/img`
     next()
 };
 
