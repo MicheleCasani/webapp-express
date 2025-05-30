@@ -31,7 +31,10 @@ const show = (req, res) => {
     const id = parseInt(req.params.id);
 
     // salvo in una variabile la query da utilizzare
-    const movieSql = 'SELECT * FROM movies WHERE id = ?';
+    const movieSql = `SELECT M.*,ROUND(AVG(R.VOTE)) AS voto_medio
+     FROM movies M 
+     JOIN reviews R ON R.movie_id = M.id
+      WHERE M.id=?`
 
     const reviewSql = `
     SELECT *
