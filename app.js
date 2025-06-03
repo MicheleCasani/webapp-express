@@ -1,6 +1,12 @@
 // importo express
 const express = require('express');
 const app = express()
+// import cors
+const cors = require('cors')
+
+// utilizzo il middleware per il cors
+app.use(cors({ origin: process.env.FE_APP }));
+
 
 console.log(process.env.SERVER_PORT)
 const port = 3000;
