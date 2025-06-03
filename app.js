@@ -7,6 +7,7 @@ const cors = require('cors')
 // utilizzo il middleware per il cors
 app.use(cors({ origin: process.env.FE_APP }));
 
+app.use(express.static('public'))
 
 console.log(process.env.SERVER_PORT)
 const port = 3000;
