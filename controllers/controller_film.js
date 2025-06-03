@@ -27,36 +27,36 @@ const index = (req, res) => {
 };
 
 const show = (req, res) => {
-    // recupero id
+    // Recupero ID
     const id = parseInt(req.params.id);
 
-    // salvo in una variabile la query da utilizzare
-    const movieSql = `SELECT M.*,ROUND(AVG(R.VOTE)) AS voto_medio
-     FROM movies M 
-     JOIN reviews R ON R.movie_id = M.id
-      WHERE M.id=?`
+    // Query per il film e il voto medio
+    const movieSql = `SELECT M.*, ROUND(AVG(R.VOTE)) AS voto_medio
+                      FROM movies M
+                      JOIN reviews R ON R.movie_id = M.id
+                      WHERE M.id=?`;
 
-    const reviewSql = `
-    SELECT *
-    FROM reviews
-    WHERE movie_id = ?
-    `;
+    // Query per le recensioni
+    const reviewSql = `SELECT * FROM reviews WHERE movie_id = ?`;
 
-    // eseguo la query per mostrare la singola review
+    // Eseguo la query per il film
     connection.query(movieSql, [id], (err, movieResults) => {
         if (err) return res.status(500).json({ error: 'Database error' });
-        if (movieResults.length === 0) return res.status(404).json({ error: 'Post non trovato' });
+        if (movieResults.length === 0) return res.status(404).json({ error: 'Film non trovato' });
 
-        // recupero il film
+        // Recupero il film corretto
         const movie = movieResults[0];
 
-        // eseguo la query per mostrare le review
+        // Controllo se `req.imagePath` è definito
+        movie.image = req.imagePath ? req.imagePath + movie.image : `http://localhost:3000/images/${movie.image}`;
+
+        console.log("Percorso immagine:", movie.image); // Debug
+
+        // Eseguo la query per mostrare le recensioni
         connection.query(reviewSql, [id], (err, reviewResults) => {
+            if (err) return res.status(500).json({ error: 'Database error' });
 
-            // Aggiungo le recensioni al film
             movie.reviews = reviewResults;
-
-
             res.json(movie);
         });
     });
