@@ -1,6 +1,11 @@
 // importo express
 const express = require('express');
 const app = express()
+
+// middleware per il parsing delle richiesta in formato json
+app.use(express.json());
+
+
 // import cors
 const cors = require('cors')
 
@@ -11,9 +16,6 @@ app.use(express.static('public'))
 
 console.log(process.env.SERVER_PORT)
 const port = 3000;
-
-// middleware per il parsing delle richiesta in formato json
-app.use(express.json());
 
 // middlewares di errore
 const notFound = require("./middlewares/notFound")

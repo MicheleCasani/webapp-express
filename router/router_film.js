@@ -21,7 +21,10 @@ router.get('/:id', movieController.show);
 // router.post('/', upload.single('image'), movieController.store);
 
 // store review
-router.post('/:id/reviews', movieController.storeReviews);
+router.post('/:id/reviews', (req, res, next) => {
+    console.log("Router Body:", req.body);
+    next();
+}, movieController.storeReviews);
 
 
 // esportazione router

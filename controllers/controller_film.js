@@ -87,7 +87,26 @@ const show = (req, res) => {
 // store review
 const storeReviews = (req, res, next) => {
 
+    console.log("Request Body:", req.body);
+
+    // recupero il parametro id
     const { id } = req.params
+
+    const { text, vote, name } = req.body
+
+    // preparo la query
+    const sql = "INSERT INTO reviews (text, vote, name, movie_id) VALUES (?, ?, ?, ?)";
+
+    // eseguo la query
+    connection.query(sql, [text, vote, name, id], (err, result) => {
+        if (err) { return res.status(500).json({ error: 'Database query error' }) };
+
+        res.status(201).json({
+            status: 'success',
+            message: "Film inserito correttamente", id: result.insertId
+        })
+    })
+
 
 }
 
