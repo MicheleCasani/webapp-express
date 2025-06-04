@@ -1,6 +1,9 @@
 // importare express
 const express = require('express');
 
+// importo il middleware multer
+const upload = require('../middlewares/multer');
+
 // importo il router 
 const router = express.Router();
 
