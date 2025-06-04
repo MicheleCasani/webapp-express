@@ -17,6 +17,12 @@ router.get('/', movieController.index);
 //show 
 router.get('/:id', movieController.show);
 
+// store
+// router.post('/', upload.single('image'), movieController.store);
+
+// store review
+router.post('/:id/reviews', movieController.storeReviews);
+
 
 // esportazione router
 module.exports = router;

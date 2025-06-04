@@ -3,6 +3,7 @@ const mysql = require('../data/db.js');
 // importo connection
 const connection = require('../data/db.js');
 
+
 // index
 const index = (req, res) => {
 
@@ -62,11 +63,37 @@ const show = (req, res) => {
     });
 };
 
+// // store
+// const store = (req, res, next) => {
+//     const { title, author, abstract, } = req.body
 
+//     // 
+//     const sql = "INSERT INTO movies (title, author,abstract,image)VALUE (?,?,?,?)";
 
+//     const imageName = req.file.filename;
+
+//     // eseguo la query
+//     connection.query(sql, [title, author, abstract, imageName], (err, result) => {
+//         // se c'è un errore mi viene catturato e esegue direttamente la prossima istruzione
+//         if (err) return next('Errore caricamento nuovo libro');
+
+//         res.status(201).json({
+//             status: 'success',
+//             message: "Film inserito correttamente"
+//         })
+//     });
+// }
+
+// store review
+const storeReviews = (req, res, next) => {
+
+    const { id } = req.params
+
+}
 
 module.exports = {
     index,
-    show
+    show,
+    storeReviews
 }
 
